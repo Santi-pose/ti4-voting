@@ -83,6 +83,15 @@ const VotingButton = styled.button`
     margin-left: 10px;
 `
 
+const AdminButton = styled(VotingButton)`
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+`
+
 const VoteUserContainer = styled.div`
     display: flex;
     align-items: center;
@@ -197,7 +206,7 @@ function Voting({ userName, admin }) {
                 <VoteUserVotes>{users.users[user].votes}</VoteUserVotes>
                 <VoteUserVotes>{users.users[user].ami}</VoteUserVotes>
                 {admin &&
-                    <VotingButton onClick={() => remove(user)}>R</VotingButton>
+                    <AdminButton onClick={() => remove(user)}>R</AdminButton>
                 }
             </VoteUserContainer>
         })
