@@ -95,109 +95,12 @@ function Login({ change, userId }) {
     const [faction, setFaction] = useState('');
 
     const icons = [
-        {
-            name: "Arborec",
-            logo: "/factions/Arborec"
-        },
-        {
-            name: "Argent",
-            logo: "/factions/ArgentFactionSymbol"
-        },
-        {
-            name: "Barony",
-            logo: "/factions/Barony"
-        },
-        {
-            name: "Cabal",
-            logo: "/factions/CabalFactionSymbol"
-        },
-        {
-            name: "Empyrean",
-            logo: "/factions/EmpyreanFactionSymbol"
-        },
-        {
-            name: "Ghosts of creus",
-            logo: "/factions/Ghosts"
-        },
-        {
-            name: "Hacan",
-            logo: "/factions/Hacan"
-        },
-        {
-            name: "Jol-Nar",
-            logo: "/factions/Jol-Nar"
-        },
-        {
-            name: "Keleres",
-            logo: "/factions/KeleresFactionSymbol"
-        },
-        {
-            name: "L1Z1X",
-            logo: "/factions/L1Z1X"
-        },
-        {
-            name: "Mahact",
-            logo: "/factions/MahactFactionSymbol"
-        },
-        {
-            name: "Mentak",
-            logo: "/factions/Mentak"
-        },
-        {
-            name: "Muaat",
-            logo: "/factions/Muaat"
-        },
-        {
-            name: "Naalu",
-            logo: "/factions/Naalu"
-        },
-        {
-            name: "NaazRokha",
-            logo: "/factions/NaazRokhaFactionSymbol"
-        },
-        {
-            name: "Nekro",
-            logo: "/factions/Nekro"
-        },
-        {
-            name: "Nomad",
-            logo: "/factions/NomadFactionSheet"
-        },
-        {
-            name: "Saar",
-            logo: "/factions/Saar"
-        },
-        {
-            name: "Sardakk",
-            logo: "/factions/Sardakk"
-        },
-        {
-            name: "Sol",
-            logo: "/factions/Sol"
-        },
-        {
-            name: "Ul",
-            logo: "/factions/UlFactionSymbol"
-        },
-        {
-            name: "Winnu",
-            logo: "/factions/Winnu"
-        },
-        {
-            name: "Xxcha",
-            logo: "/factions/Xxcha"
-        },
-        {
-            name: "Yin",
-            logo: "/factions/Yin"
-        },
-        {
-            name: "Yssaril",
-            logo: "/factions/Yssaril"
-        }
+        "Arborec", "Argent", "Barony", "Cabal", "Empyrean", "Ghosts of creus", "Hacan",
+        "Jol-Nar", "Keleres", "L1Z1X", "Mahact", "Mentak", "Muaat", "Naalu",
+        "NaazRokha","Nekro", "Nomad","Saar","Sardakk","Sol","Ul","Winnu","Xxcha","Yin","Yssaril"
     ]
 
-    const factions = icons.map(item => { return { value: item.name, label: item.name }})
+    const factions = icons.map(item => { return { value: item, label: item }})
 
     const loginUser = (user) => {
 
