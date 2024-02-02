@@ -40,7 +40,7 @@ const SuperBaseContainer = styled.div`
 const BaseContainer = styled.div`
     margin-top: 10px;
     margin-bottom: 10px;
-    background-color: rgba(128, 128, 128, 0.5);
+    background-color: rgba(128, 128, 128, 0.7);
     border-radius: 25px;
     width: 100%;
 ` 
@@ -113,6 +113,19 @@ const VoteUserContainer = styled.div`
                     return 'black';
             }
         }
+    };
+
+    background-color: ${(props) => {
+        //console.log("Render box" + props.state)
+        switch (props.state) {
+            case "voted":
+                return 'green';
+            case "skip":
+                return 'yellow';
+            default:
+                return 'none';
+        }
+    }
     };
 `
 
