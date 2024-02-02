@@ -58,6 +58,10 @@ export async function start(): Promise<express.Application> {
         res.send(await controller.remove(req))
     });
 
+    app.post('/v1/politic', async (req, res) => {
+        res.send(await controller.politic(req))
+    });
+
     app.locals.server = await app.listen(3001);
 
     const server = http.createServer();

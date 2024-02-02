@@ -88,6 +88,7 @@ export class SomeController {
 		})
 
 		this.users.results = { afavor: 0, encontra: 0 }
+		delete this.users['selectedCard'];
 
 		this.sendAllUsers(req);
 
@@ -101,6 +102,7 @@ export class SomeController {
 		})
 
 		this.users.results = { afavor: 0, encontra: 0 }
+		delete this.users['selectedCard'];
 
 		this.sendAllUsers(req);
 
@@ -115,11 +117,21 @@ export class SomeController {
 		return this.users;
 	}
 
+	async politic(req: express.Request): Promise<Object> {
+
+		this.users['selectedCard'] = req.body.name
+
+		this.sendAllUsers(req);
+
+		return this.users;
+	}
+
+	
+
 	async sendUsers(req) {
 		Object.keys(this.socketUsers).forEach(userId => {
 			if (req.body.name !== this.socketUsers[userId].userName) {
 				var request = JSON.stringify({ users: this.users })
-				console.log("Mandando update a todos los demas users " + request)
 				this.socketUsers[userId].client.send(request);
 			} else {
 				console.log("skiping user " + req.body.name);
@@ -130,7 +142,6 @@ export class SomeController {
 	async sendAllUsers(req) {
 		Object.keys(this.socketUsers).forEach(userId => {
 			var request = JSON.stringify({ users: this.users })
-			console.log("Mandando update a todos los demas users " + request)
 			this.socketUsers[userId].client.send(request);
 		})
 	}

@@ -3,8 +3,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { VotingContext } from './votingContext'
-import ReactDOM from "react-dom";
 import QRCode from "react-qr-code";
+import Papa from 'papaparse';
+import Select from 'react-select'
+import Collapsible from 'react-collapsible';
 
 const BackgroundContainer = styled.div`
     margin-top: 10px;
@@ -32,6 +34,7 @@ const SuperBaseContainer = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: row;
+    width: 100%;
 `
 
 const BaseContainer = styled.div`
@@ -141,6 +144,10 @@ const VoteUserVotes = styled.h1`
     margin: 0 0 0 0;
 `
 
+const CollapsibleContainer = styled.div`
+    background-color: white;
+`
+
 function Voting({ userName, admin }) {
 
     const users = useContext(VotingContext);
@@ -148,6 +155,12 @@ function Voting({ userName, admin }) {
     const [cantVotes, setCantVotes] = useState(0);
     const [cantMaxVotes, setCantMaxVotes] = useState(0);
     const [selectedUser, setSelectedUser] = useState("");
+    const [politics, setPolitics] = useState({})
+    const [politicsOptions, setPoliticsOptions] = useState([])
+    //const [selectedCard, setSelectedCard] = useState(null)
+
+    //const [csvData, setCsvData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const vote = (afavor) => {
         setCantMaxVotes(cantMaxVotes - cantVotes);
@@ -185,7 +198,12 @@ function Voting({ userName, admin }) {
             console.log(response.data);
         });
     }
-    
+
+    const sendPolitic = (value) => {
+        axios.post("http://" + window.location.hostname + ":3001/v1/politic", { name: value }).then((response) => {
+            console.log(response.data);
+        });
+    }
 
     const updateMaxVotes = (maxVotes) => {
         setCantMaxVotes(maxVotes);
@@ -197,9 +215,9 @@ function Voting({ userName, admin }) {
     }
 
     const renderVotes = () => {
-        console.log("rendegin users " + JSON.stringify(users))
+        //console.log("rendegin users " + JSON.stringify(users))
         return Object.keys(users.users).map((user) => {
-            console.log("User state " + JSON.stringify( users.users[user].state))
+           // console.log("User state " + JSON.stringify( users.users[user].state))
             return <VoteUserContainer state={users.users[user].state}>
                 <VoteUserName>{user}</VoteUserName>
                 <VoteUserTotalVotes>{users.users[user].maxVotes}</VoteUserTotalVotes>
@@ -214,10 +232,49 @@ function Voting({ userName, admin }) {
 
     const renderSelectable = () => {
         return Object.keys(users.users).map((user) => {
-            console.log("User state " + JSON.stringify(users.users[user].state))
+            //console.log("User state " + JSON.stringify(users.users[user].state))
             return  <option value={user}>{user}</option>
         })
     }
+
+    const updateSelectedCard = (card) => {
+        //console.log("Selected card = " + JSON.stringify(politics[card.value]))
+        sendPolitic(card.value)
+        //setSelectedCard(politics[card.value])
+    }
+
+    const fetchData = async () => {
+        const response = await fetch('/politics-cards.csv');
+        const reader = response.body.getReader();
+        const result = await reader.read();
+        const text = new TextDecoder('utf-8').decode(result.value);
+
+        Papa.parse(text, {
+            header: true,
+            complete: (result) => {
+                const auxPolitics = {}
+                setPoliticsOptions(result.data.map(entry => {
+                    console.log(JSON.stringify(entry))
+                    auxPolitics[entry.Card] = {
+                        Card: entry.Card,
+                        Status: entry.Status,
+                        Text: entry.Text.replaceAll('||', ',')
+                    };
+                    return { value: entry.Card, label: entry.Card }
+                }))
+                //console.log(" set politics: " + JSON.stringify(auxPolitics))   
+                setPolitics(auxPolitics);
+                setLoading(false);
+            },
+            error: (error) => {
+                console.error('Error parsing CSV:', error);
+            },
+        });
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <BackgroundContainer>
@@ -235,10 +292,27 @@ function Voting({ userName, admin }) {
 
                 <BaseContainer>
                     <Title>Agenda</Title>
+                    {admin &&
+                        <>
+                        <Select options={politicsOptions} onChange={updateSelectedCard} />
+                        </>
+                    }
                     {!admin &&
                         <>
                             total votes<LoginInput type="number" min="0" max="5000" step="1" value={cantMaxVotes} onChange={(event) => { updateMaxVotes(event.target.value) }} />
                         </>
+                    }
+                    {!loading && users.selectedCard &&
+                        <CollapsibleContainer>
+                            <Collapsible trigger={politics[users.selectedCard].Card} >
+                                <p>
+                                    {politics[users.selectedCard].Status}
+                                </p>
+                                <p>
+                                    {politics[users.selectedCard].Text}
+                                </p>
+                            </Collapsible>
+                        </CollapsibleContainer>
                     }
                     <VoteUserContainer>
                         <VoteUserName>FAVOR: {users.results.afavor}</VoteUserName>
