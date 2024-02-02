@@ -27,7 +27,12 @@ export class SomeController {
 			console.log("body recivido " + JSON.stringify(req.body));
 			this.socketUsers[req.body.userId]['userName'] = req.body.name;
 			this.users.users[req.body.name] = { userId: req.body.userId, votes: 0, maxVotes: 0, state: "", ami: 0, faction: req.body.faction };
+		} else {
+			if (req.body.faction !== undefined) {
+				this.users.users[req.body.name].faction = req.body.faction;
+			}
 		}
+
 		this.sendAllUsers(req);
 
 		return this.users;
@@ -54,8 +59,6 @@ export class SomeController {
 					this.users.results.encontra += votes;
 				}
 			}
-
-			
 
 			this.sendAllUsers(req);
 		}

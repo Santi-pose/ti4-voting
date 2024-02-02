@@ -131,7 +131,9 @@ function Login({ change, userId }) {
                 <LoginScreen>
                     <LoginLabel>Name (4 to 8 characters):</LoginLabel>
                     <LoginInput type="text" id="name" name="name" required minlength="4" maxlength="8" size="10" onChange={(event) => { console.log(event.target.value); setUser(event.target.value) } } />
-                    <Select options={factions} onChange={setFaction} />
+                    <>
+                        <Select options={factions} onChange={setFaction} />
+                    </>
                     <LoginButton onClick={() => loginUser(user)}>LOGIN</LoginButton>
                     <LoginAsAdminButton onClick={() => loginAdmin("a369b338cdb0")}>ADMIN</LoginAsAdminButton>
                 </LoginScreen>

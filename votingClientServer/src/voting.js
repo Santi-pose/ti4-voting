@@ -119,7 +119,7 @@ const VoteUserContainer = styled.div`
 const VoteUserTotalVotes = styled.h1`
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 20%;
     border-style: solid;
     margin: 0 0 0 0;
     font-size: 1em;
@@ -129,7 +129,7 @@ const VoteUserName = styled.h1`
     display: flex;
     font-size: 1em;
     align-items: center;
-    width: 100%;
+    width: 30%;
     margin: 0 0 0 0;
     min-width: 80px;
     margin-right: 10px;
@@ -138,7 +138,7 @@ const VoteUserName = styled.h1`
 const VoteUserVotes = styled.h1`
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 20%;
     border-style: solid;
     font-size: 1em;
     margin: 0 0 0 0;
@@ -151,6 +151,7 @@ const CollapsibleContainer = styled.div`
 const UserNameContainer = styled.div`
     display: flex;
     flex-direction: row;
+    width: 33%;
 `
 
 const FactionLogo = styled.img`
@@ -197,9 +198,7 @@ function Voting({ userName, admin }) {
     const [selectedUser, setSelectedUser] = useState("");
     const [politics, setPolitics] = useState({})
     const [politicsOptions, setPoliticsOptions] = useState([])
-    //const [selectedCard, setSelectedCard] = useState(null)
 
-    //const [csvData, setCsvData] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const vote = (afavor) => {
@@ -365,7 +364,7 @@ function Voting({ userName, admin }) {
                         <VoteUserName>NOMBRE</VoteUserName>
                         <VoteUserTotalVotes>MAX</VoteUserTotalVotes>
                         <VoteUserVotes>USADOS</VoteUserVotes>
-                        <VoteUserVotes>AMI</VoteUserVotes>
+                        <VoteUserVotes>RECIVIDOS</VoteUserVotes>
                     </VoteUserContainer>
                     {renderVotes()}
 
