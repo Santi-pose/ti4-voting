@@ -87,7 +87,7 @@ export class SomeController {
 	async next(req: express.Request): Promise<Object> {
 		Object.keys(this.users.users).forEach((userNAme) => {
 			var user = this.users.users[userNAme];
-			this.users.users[userNAme] = { userId: req.body.userId, votes: 0, maxVotes: this.users.users[userNAme].maxVotes, state: "", ami: 0 };
+			this.users.users[userNAme] = { userId: req.body.userId, votes: 0, maxVotes: this.users.users[userNAme].maxVotes, state: "", ami: 0, faction: this.users.users[userNAme].faction };
 		})
 
 		this.users.results = { afavor: 0, encontra: 0 }

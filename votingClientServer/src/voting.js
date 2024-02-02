@@ -125,6 +125,26 @@ const VoteUserTotalVotes = styled.h1`
     font-size: 1em;
 `
 
+const CantVotosFavor = styled.h1`
+    display: flex;
+    align-items: center;
+    width: 20%;
+    border-style: solid;
+    margin: 0 0 0 0;
+    font-size: 1em;
+    background-color: green;
+`
+
+const CantVotosContra = styled.h1`
+    display: flex;
+    align-items: center;
+    width: 20%;
+    border-style: solid;
+    margin: 0 0 0 0;
+    font-size: 1em;
+    background-color: red;
+`
+
 const VoteUserName = styled.h1`
     display: flex;
     font-size: 1em;
@@ -357,8 +377,8 @@ function Voting({ userName, admin }) {
                         </CollapsibleContainer>
                     }
                     <VoteUserContainer>
-                        <VoteUserName>FAVOR: {users.results.afavor}</VoteUserName>
-                        <VoteUserTotalVotes>CONTRA: {users.results.encontra}</VoteUserTotalVotes>
+                        <CantVotosFavor>FAVOR: {users.results.afavor}</CantVotosFavor>
+                        <CantVotosContra>CONTRA: {users.results.encontra}</CantVotosContra>
                     </VoteUserContainer>
                     <VoteUserContainer>
                         <VoteUserName>NOMBRE</VoteUserName>
