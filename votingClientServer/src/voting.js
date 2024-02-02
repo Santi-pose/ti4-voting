@@ -128,7 +128,7 @@ const VoteUserTotalVotes = styled.h1`
 const CantVotosFavor = styled.h1`
     display: flex;
     align-items: center;
-    width: 20%;
+    width: 50%;
     border-style: solid;
     margin: 0 0 0 0;
     font-size: 1em;
@@ -138,7 +138,7 @@ const CantVotosFavor = styled.h1`
 const CantVotosContra = styled.h1`
     display: flex;
     align-items: center;
-    width: 20%;
+    width: 50%;
     border-style: solid;
     margin: 0 0 0 0;
     font-size: 1em;
