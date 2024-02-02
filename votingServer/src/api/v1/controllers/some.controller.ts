@@ -26,7 +26,7 @@ export class SomeController {
 		if (!this.users.users.hasOwnProperty(req.body.name)) {
 			console.log("body recivido " + JSON.stringify(req.body));
 			this.socketUsers[req.body.userId]['userName'] = req.body.name;
-			this.users.users[req.body.name] = { userId: req.body.userId, votes: 0, maxVotes: 0, state: "", ami: 0 };
+			this.users.users[req.body.name] = { userId: req.body.userId, votes: 0, maxVotes: 0, state: "", ami: 0, faction: req.body.faction };
 		}
 		this.sendAllUsers(req);
 
@@ -98,7 +98,7 @@ export class SomeController {
 	async reset(req: express.Request): Promise<Object> {
 		Object.keys(this.users.users).forEach((userNAme) => {
 			var user = this.users.users[userNAme];
-			this.users.users[userNAme] = { userId: req.body.userId, votes: 0, maxVotes: 0, state: "", ami: 0 };
+			this.users.users[userNAme] = { userId: req.body.userId, votes: 0, maxVotes: 0, state: "", ami: 0, faction: this.users.users[userNAme].faction };
 		})
 
 		this.users.results = { afavor: 0, encontra: 0 }

@@ -103,7 +103,7 @@ const VoteUserContainer = styled.div`
     width: 100%;
     border-style: solid;
     border-color: ${(props) => {
-        console.log("Render box" + props.state)
+        //console.log("Render box" + props.state)
             switch (props.state) {
                 case "voted":
                     return 'green';
@@ -129,10 +129,10 @@ const VoteUserName = styled.h1`
     display: flex;
     font-size: 1em;
     align-items: center;
-    border-style: solid;
     width: 100%;
-    min-width:150px;
     margin: 0 0 0 0;
+    min-width: 80px;
+    margin-right: 10px;
 `
 
 const VoteUserVotes = styled.h1`
@@ -147,6 +147,46 @@ const VoteUserVotes = styled.h1`
 const CollapsibleContainer = styled.div`
     background-color: white;
 `
+
+const UserNameContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+`
+
+const FactionLogo = styled.img`
+    margin-right: 10px;
+    max-width: 40px;
+`
+
+const icons = {
+    "Barony": "/Barony.webp",
+    "Argent": "/ArgentFactionSymbol.webp",
+    "Arborec": "/Arborec.webp",
+    "Cabal": "/CabalFactionSymbol.webp",
+    "Empyrean": "/EmpyreanFactionSymbol.webp",
+    "Ghosts of creus": "/Ghosts.webp",
+    "Hacan": "/Hacan.webp",
+    "Jol-Nar": "/Jol-Nar.webp",
+    "Keleres": "/KeleresFactionSymbol.webp",
+    "L1Z1X": "/L1Z1X.webp",
+    "Mahact": "/MahactFactionSymbol.webp",
+    "Mentak": "/Mentak.webp",
+    "Muaat": "/Muaat.webp",
+    "Naalu": "/Naalu.webp",
+    "NaazRokha": "/NaazRokhaFactionSymbol.webp",
+    "Nekro": "/Nekro.webp",
+    "Nomad": "/NomadFactionSheet.webp",
+    "Saar": "/Saar.webp",
+    "Sardakk": "/Sardakk.webp",
+    "Sol": "/Sol.webp",
+    "Ul": "/UlFactionSymbol.webp",
+    "Winnu": "/Winnu.webp",
+    "Xxcha": "/Xxcha.webp",
+    "Yin": "/Yin.webp",
+    "Yssaril": "/Yssaril.webp",
+}
+        
+   
 
 function Voting({ userName, admin }) {
 
@@ -167,7 +207,7 @@ function Voting({ userName, admin }) {
         setCantVotes(0);
         setSelectedUser("none")
         var request = { name: userName, votes: cantVotes, afavor, selectedUser }
-        console.log("Sending votes ", request)
+        //console.log("Sending votes ", request)
         axios.post("http://" + window.location.hostname +":3001/v1/vote", request ).then((response) => {
             console.log(response.data);
         });
@@ -219,7 +259,10 @@ function Voting({ userName, admin }) {
         return Object.keys(users.users).map((user) => {
            // console.log("User state " + JSON.stringify( users.users[user].state))
             return <VoteUserContainer state={users.users[user].state}>
-                <VoteUserName>{user}</VoteUserName>
+                <UserNameContainer>
+                    <FactionLogo src={icons[users.users[user].faction]}></FactionLogo>
+                    <VoteUserName>{user}</VoteUserName>
+                </UserNameContainer>
                 <VoteUserTotalVotes>{users.users[user].maxVotes}</VoteUserTotalVotes>
                 <VoteUserVotes>{users.users[user].votes}</VoteUserVotes>
                 <VoteUserVotes>{users.users[user].ami}</VoteUserVotes>
@@ -254,7 +297,7 @@ function Voting({ userName, admin }) {
             complete: (result) => {
                 const auxPolitics = {}
                 setPoliticsOptions(result.data.map(entry => {
-                    console.log(JSON.stringify(entry))
+                    //console.log(JSON.stringify(entry))
                     auxPolitics[entry.Card] = {
                         Card: entry.Card,
                         Status: entry.Status,

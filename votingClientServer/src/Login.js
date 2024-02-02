@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import Select from 'react-select'
 
 const BackgroundContainer = styled.div`
     margin-top: 10px;
@@ -91,10 +92,116 @@ const LoginAsAdminButton = styled.button`
 function Login({ change, userId }) {
 
     const [user, setUser] = useState('');
+    const [faction, setFaction] = useState('');
+
+    const icons = [
+        {
+            name: "Arborec",
+            logo: "/factions/Arborec"
+        },
+        {
+            name: "Argent",
+            logo: "/factions/ArgentFactionSymbol"
+        },
+        {
+            name: "Barony",
+            logo: "/factions/Barony"
+        },
+        {
+            name: "Cabal",
+            logo: "/factions/CabalFactionSymbol"
+        },
+        {
+            name: "Empyrean",
+            logo: "/factions/EmpyreanFactionSymbol"
+        },
+        {
+            name: "Ghosts of creus",
+            logo: "/factions/Ghosts"
+        },
+        {
+            name: "Hacan",
+            logo: "/factions/Hacan"
+        },
+        {
+            name: "Jol-Nar",
+            logo: "/factions/Jol-Nar"
+        },
+        {
+            name: "Keleres",
+            logo: "/factions/KeleresFactionSymbol"
+        },
+        {
+            name: "L1Z1X",
+            logo: "/factions/L1Z1X"
+        },
+        {
+            name: "Mahact",
+            logo: "/factions/MahactFactionSymbol"
+        },
+        {
+            name: "Mentak",
+            logo: "/factions/Mentak"
+        },
+        {
+            name: "Muaat",
+            logo: "/factions/Muaat"
+        },
+        {
+            name: "Naalu",
+            logo: "/factions/Naalu"
+        },
+        {
+            name: "NaazRokha",
+            logo: "/factions/NaazRokhaFactionSymbol"
+        },
+        {
+            name: "Nekro",
+            logo: "/factions/Nekro"
+        },
+        {
+            name: "Nomad",
+            logo: "/factions/NomadFactionSheet"
+        },
+        {
+            name: "Saar",
+            logo: "/factions/Saar"
+        },
+        {
+            name: "Sardakk",
+            logo: "/factions/Sardakk"
+        },
+        {
+            name: "Sol",
+            logo: "/factions/Sol"
+        },
+        {
+            name: "Ul",
+            logo: "/factions/UlFactionSymbol"
+        },
+        {
+            name: "Winnu",
+            logo: "/factions/Winnu"
+        },
+        {
+            name: "Xxcha",
+            logo: "/factions/Xxcha"
+        },
+        {
+            name: "Yin",
+            logo: "/factions/Yin"
+        },
+        {
+            name: "Yssaril",
+            logo: "/factions/Yssaril"
+        }
+    ]
+
+    const factions = icons.map(item => { return { value: item.name, label: item.name }})
 
     const loginUser = (user) => {
 
-        var request = { name: user, userId: userId }
+        var request = { name: user, userId: userId, faction: faction.value }
         console.log("Mandando ", request)
 
         axios.post("http://" + window.location.hostname +":3001/v1/login", request).then((response) => {
@@ -121,6 +228,7 @@ function Login({ change, userId }) {
                 <LoginScreen>
                     <LoginLabel>Name (4 to 8 characters):</LoginLabel>
                     <LoginInput type="text" id="name" name="name" required minlength="4" maxlength="8" size="10" onChange={(event) => { console.log(event.target.value); setUser(event.target.value) } } />
+                    <Select options={factions} onChange={setFaction} />
                     <LoginButton onClick={() => loginUser(user)}>LOGIN</LoginButton>
                     <LoginAsAdminButton onClick={() => loginAdmin("a369b338cdb0")}>ADMIN</LoginAsAdminButton>
                 </LoginScreen>
